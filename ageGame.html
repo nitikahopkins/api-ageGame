@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Age Guessing Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="ageGame.css" />
+  </head>
+  <body>
+    <h1 class="main">Find your age with your first name</h1>
+    <br /><br />
+    <label for="input" class="name">First name:</label>
+    <input type="text" id="firstName" /><br /><br /><br /><br />
+    <button
+      onclick="parseAgeJSON()"
+      class="button"
+      style="display: block; margin: 0 auto;"
+    >
+      Guess My Age
+    </button>
+
+    <script>
+      async function getAge() {
+        fName = document.getElementById("firstName").value;
+        const data = await fetch("https://api.agify.io/?name=" + fName);
+        // console.log("DATA: " + JSON.stringify(data));
+        const response = await data.json();
+        return response;
+      }
+
+      const parseAgeJSON = () => {
+        getAge().then(function (data) {
+          console.log(data.age);
+          quizes = data;
+          document.getElementById("doc-text").innerHTML =
+            "Your age is: " + data.age;
+        });
+      };
+    </script>
+
+    <div id="doc-text" class="age"></div>
+  </body>
+</html>
